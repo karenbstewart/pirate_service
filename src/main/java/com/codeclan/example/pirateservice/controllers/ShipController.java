@@ -3,6 +3,8 @@ package com.codeclan.example.pirateservice.controllers;
 import com.codeclan.example.pirateservice.models.Ship;
 import com.codeclan.example.pirateservice.repositories.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +19,12 @@ public class ShipController {
     ShipRepository shipRepository;
 
     @GetMapping(value = "/ships")
-    public List<Ship> getAllShip(){
-        return shipRepository.findAll();
+    public ResponseEntity< List<Ship>> getAllShip(){
+        return new ResponseEntity<>(shipRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/ships/{id}")
-    public Optional<Ship> getShip(@PathVariable Long id){
-        return shipRepository.findById(id);
+    public ResponseEntity getShip(@PathVariable Long id){
+        return new ResponseEntity(shipRepository.findById(id), HttpStatus.OK) ;
     }
 }
